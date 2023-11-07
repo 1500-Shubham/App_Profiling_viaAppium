@@ -10,17 +10,20 @@ import { Capabilities } from '../components/Capabilities';
 
 export const Home = () => {
   const { sessionId, setSessionId, sessionDetails, setSessionDetails }= useContext(AppContext);
-  const[log,setLog]=useState("");
-  const[chart,setChart]=useState(false);
+  const[log,setLog]=useState({});
+  const[tLog,setTLog]=useState({});
+  const[dLog,setDLog]=useState({});
+  const[aLog,setALog]=useState({});
+  const[display,setDisplay]=useState([true,false,false,false]);
   const[cpuChart,setCpuChart]=useState({
             series: [
                         {
                           name: "CPU Used (%)",
-                          data: [28, 29, 33, 36, 32, 32, 33]
+                          data: []
                         },
                         {
                           name: "Total CPU Used (%)",
-                          data: [12, 11, 14, 18, 17, 13, 13]
+                          data: []
                         }
                       ],
             options: {
@@ -61,7 +64,7 @@ export const Home = () => {
               //   size: 1
               // },
               xaxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                categories: [],
                 title: {
                   text: 'Timestamp (sec)'
                 }
@@ -71,7 +74,7 @@ export const Home = () => {
                   text: 'CPU (%)'
                 },
                 min: 0,
-                max: 400
+                max: 100*(parseInt(sessionDetails.device_info.total_cpu))
               },
               legend: {
                 position: 'top',
@@ -86,11 +89,11 @@ export const Home = () => {
             series: [
                         {
                           name: "Memory Used (MB)",
-                          data: [28, 29, 33, 36, 32, 32, 33]
+                          data: []
                         },
                         {
                           name: "Total Memory Used (MB)",
-                          data: [12, 11, 14, 18, 17, 13, 13]
+                          data: []
                         }
                       ],
             options: {
@@ -131,7 +134,7 @@ export const Home = () => {
               //   size: 1
               // },
               xaxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                categories: [],
                 title: {
                   text: 'Timestamp (sec)'
                 }
@@ -141,7 +144,7 @@ export const Home = () => {
                   text: 'Memory (MB)'
                 },
                 min: 0,
-                max: 2000
+                max: parseInt(((sessionDetails.device_info.total_memory)/1024).toFixed(2))
               },
               legend: {
                 position: 'top',
@@ -153,56 +156,38 @@ export const Home = () => {
             },
   })
 
-  useEffect(()=>{},[]); 
+  useEffect(()=>{
   
-  const textLog= async()=>{
-    setChart(false);
-   const {data}= await axios.get(`${appiumServer}/dashboard/api/sessions/${sessionId}/logs/text`)
+   axios.get(`${appiumServer}/dashboard/api/sessions/${sessionId}/logs/text`).then((res)=>{
+  const {data}= res
   var count= data.result.count;
-  // var textArray=[]
-  // for(var i=0;i<count;++i){
-  //   textArray.push({
-  //     command_name:data.result.rows[i].command_name,
-  //     created_at: data.result.rows[i].created_at,
-  //     end_time: data.result.rows[i].end_time,
-  //     is_error: data.result.rows[i].is_error,
-  //     log_id: data.result.rows[i].log_id,
-  //     params: data.result.rows[i].params,
-  //     response: data.result.rows[i].response,
-  //     screen_shot: data.result.rows[i].screen_shot,
-  //     session_id: data.result.rows[i].session_id,
-  //     start_time: data.result.rows[i].start_time,
-  //     title: data.result.rows[i].title,
-  //     title_info: data.result.rows[i].title_info,
-  //     updated_at: data.result.rows[i].updated_at})
-  // }
   var textArray=data.result.rows;
   var myJsonString = JSON.stringify(textArray);
-  setLog( JSON.stringify(JSON.parse(myJsonString),null,2))
-  console.log(JSON.stringify(JSON.parse(myJsonString),null,2))
+  setTLog( JSON.stringify(JSON.parse(myJsonString),null,2))
+  // console.log(JSON.stringify(JSON.parse(myJsonString),null,2))
+  }).catch(error => {
+     console.log(error)
+  })
 
-  }
-  const deviceLog= async()=>{
-    setChart(false);
-    const {data}= await axios.get(`${appiumServer}/dashboard/api/sessions/${sessionId}/logs/device`)
-    var count= data.result.count;
-    var textArray=data.result.rows;
-    var myJsonString = JSON.stringify(textArray);
-    setLog( JSON.stringify(JSON.parse(myJsonString),null,2))
-    console.log(JSON.stringify(JSON.parse(myJsonString),null,2))
-  }
-  const appProfiling= async()=>{
-    setChart(false);
-    const {data}= await axios.get(`${appiumServer}/dashboard/api/sessions/${sessionId}/profiling_data`)
+   axios.get(`${appiumServer}/dashboard/api/sessions/${sessionId}/logs/device`).then((res)=>{
+  const {data}= res
+  var count= data.result.count;
+  var textArray=data.result.rows;
+  var myJsonString = JSON.stringify(textArray);
+  setDLog( JSON.stringify(JSON.parse(myJsonString),null,2))
+  // console.log(JSON.stringify(JSON.parse(myJsonString),null,2))
+  }).catch(error => {
+     console.log(error)
+  })
+
+   axios.get(`${appiumServer}/dashboard/api/sessions/${sessionId}/profiling_data`)
+  .then((res)=>{
+    const {data}= res;
     var textArray=data.result;
     var myJsonString = JSON.stringify(textArray);
-    setLog( JSON.stringify(JSON.parse(myJsonString),null,2))
-    console.log(JSON.stringify(JSON.parse(myJsonString),null,2))
-  }
-  const displayChart = async()=>{
-    setChart(true);
-    const {data}= await axios.get(`${appiumServer}/dashboard/api/sessions/${sessionId}/profiling_data`)
-    var textArray=data.result;
+    setALog( JSON.stringify(JSON.parse(myJsonString),null,2))
+    // console.log(JSON.stringify(JSON.parse(myJsonString),null,2))
+    // ********Creating Charts************
     const n=textArray.length;
     const timestamp=[],cpu=[],totalCpu=[],memory=[],totalMemory=[];
     const baseTime = (new Date(textArray[0].timestamp)).getTime();
@@ -213,13 +198,12 @@ export const Home = () => {
       memory.push(`${(textArray[i].memory/1024).toFixed(2)}`)
       totalMemory.push(`${(textArray[i].total_memory_used/1024).toFixed(2)}`)
     }
-    // var myJsonString = JSON.stringify(totalMemory);
-    // console.log(JSON.stringify(JSON.parse(myJsonString),null,2))
     setCpuChart((oldCpuChart)=>{
       const newChart=oldCpuChart
       newChart.series[0].data=cpu
       newChart.series[1].data=totalCpu
       newChart.options.xaxis.categories=timestamp
+      newChart.options.yaxis.max=100*(parseInt(sessionDetails.device_info.total_cpu))
       return newChart
     })
     setMemoryChart((oldMemoryChart)=>{
@@ -227,25 +211,36 @@ export const Home = () => {
       newChart.series[0].data=memory
       newChart.series[1].data=totalMemory
       newChart.options.xaxis.categories=timestamp
+      newChart.options.yaxis.max=parseInt(((sessionDetails.device_info.total_memory)/1024).toFixed(2))
       return newChart
     })
-  }
+    // var div = document.getElementById('textarea2');
+    //  div.innerHTML = 
+    //  <div>
+    //   <ReactApexCharts  options={cpuChart.options} series={cpuChart.series} type="line" height={350} width={500} />
+    //   <ReactApexCharts  options={memoryChart.options} series={memoryChart.series} type="line" height={350} width={500} />
+    //  </div>
+  })
+
+  },[sessionId]); 
+
     return (
     <div className='home'>
         <DetailsArea/>
         <Capabilities/>
-        <div className='buttons'>
-        <button onClick={()=>textLog()}>Text Logs</button>
-        <button onClick={()=>deviceLog()}>Device Logs</button>
-        <button onClick={()=>appProfiling()}>App Profiling Logs</button>
-        <button onClick={()=>displayChart()}>CPU and Memory</button>
+        <div id='buttons'>
+        <button onClick={()=>{ setDisplay([true,false,false,false])}}>Text Logs</button>
+        <button onClick={()=>{setDisplay([false,true,false,false])}}>Device Logs</button>
+        <button onClick={()=>{ setDisplay([false,false,true,false])}}>App Profiling Logs</button>
+        <button onClick={()=>{ setDisplay([false,false,false,true])}}>CPU and Memory</button>
         </div>
-        {!chart ? (
-        <textarea className='textarea' value={log}></textarea>
-          ) : (
-        <div className='textarea2'>    
-        <ReactApexCharts  options={cpuChart.options} series={cpuChart.series} type="line" height={350} width={500} />
-        <ReactApexCharts  options={memoryChart.options} series={memoryChart.series} type="line" height={350} width={500} />
+        {display[0] ? (<textarea className='textarea' value={tLog}></textarea>) 
+        : display[1] ? (<textarea className='textarea' value={dLog}></textarea>)
+        : display[2] ? (<textarea className='textarea' value={aLog}></textarea>) 
+        : (
+        <div id='textarea2'>    
+        <ReactApexCharts  options={cpuChart.options} series={cpuChart.series} type="line" height={350} width={800} />
+        <ReactApexCharts  options={memoryChart.options} series={memoryChart.series} type="line" height={350} width={800} />
         </div>
         )}
     </div>
