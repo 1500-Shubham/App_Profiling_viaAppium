@@ -1,0 +1,28 @@
+.header {
+  background-color: rgb(16, 32, 39);
+  height: 4%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+  width: 100%;
+  > div {
+    h2 {
+      color: rgb(255, 255, 255);
+      font-weight: 400;
+      font-family: "Roboto Mono", monospace;
+      font-size: 20px;
+    }
+  }
+
+  > article {
+    color: rgb(255, 255, 255);
+    font-weight: 400;
+    font-family: "Roboto Mono", monospace;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+  }
+}
