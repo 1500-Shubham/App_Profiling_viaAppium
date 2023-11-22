@@ -105,8 +105,8 @@ const AppWrapper= ()=>{
 
   return (
   <AppContext.Provider value={{ sessionId, setSessionId, sessionDetails, setSessionDetails }}>
-   <App />
-   </AppContext.Provider>
+  <App />
+  </AppContext.Provider>
 )
 }
 

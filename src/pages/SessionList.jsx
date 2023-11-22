@@ -9,6 +9,7 @@ import { SessionListItems } from '../components/SessionListItems';
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 
+
 export const SessionList = () => {
     const [textArray,setTextArray]= useState([])
     const { sessionId, setSessionId, sessionDetails, setSessionDetails }= useContext(AppContext);
@@ -34,6 +35,8 @@ export const SessionList = () => {
             {
              textArray.map((item,index)=>{
               return (
+                
+              
                 <div className='sessionListItems'>
                   <button onClick={() =>updateHandler(item.session_id,item)}> <SessionListItems item={item}/></button> 
                 </div>
