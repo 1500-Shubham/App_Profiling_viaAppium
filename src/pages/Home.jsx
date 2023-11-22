@@ -8,6 +8,12 @@ import ReactApexCharts from 'react-apexcharts'
 import { DetailsArea } from '../components/detailsArea';
 import { Capabilities } from '../components/Capabilities';
 
+//MATERIAL UI
+import Box from "@mui/material/Box";
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+
+
 export const Home = () => {
   const { sessionId, setSessionId, sessionDetails, setSessionDetails }= useContext(AppContext);
   const[log,setLog]=useState({});
@@ -224,16 +230,60 @@ export const Home = () => {
 
   },[sessionId]); 
 
+  const [value, setValue] = useState('one');
+
+  const handleChange = (e, newValue) => {
+    setValue(newValue);
+    // console.log(e.target.value + " " + newValue)
+    if(newValue==='one'){
+
+    }else if(newValue==='two'){
+
+    }else if(newValue==='three'){
+
+    }else {
+
+    }
+    
+  }
     return (
     <div className='home'>
         <DetailsArea/>
         <Capabilities/>
-        <div id='buttons'>
+        
+        {/* //OLD DESIGN */}
+        {/* <div id='buttons'>
         <button onClick={()=>{ setDisplay([true,false,false,false])}}>Text Logs</button>
         <button onClick={()=>{setDisplay([false,true,false,false])}}>Device Logs</button>
         <button onClick={()=>{ setDisplay([false,false,true,false])}}>App Profiling Logs</button>
         <button onClick={()=>{ setDisplay([false,false,false,true])}}>CPU and Memory</button>
         </div>
+        {display[0] ? (<textarea className='textarea' value={tLog}></textarea>) 
+        : display[1] ? (<textarea className='textarea' value={dLog}></textarea>)
+        : display[2] ? (<textarea className='textarea' value={aLog}></textarea>) 
+        : (
+        <div id='textarea2'>    
+        <ReactApexCharts  options={cpuChart.options} series={cpuChart.series} type="line" height={350} width={800} />
+        <ReactApexCharts  options={memoryChart.options} series={memoryChart.series} type="line" height={350} width={800} />
+        </div>
+        )} */}
+        
+        {/* //NEW DESIGN */}
+          <Box sx={{ width: '100%' }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            textColor='primary'
+            indicatorColor='primary'
+            aria-label="secondary tabs example"
+            centered
+          >
+            <Tab onClick={()=>{ setDisplay([true,false,false,false])}} value="one" label="Text Logs" />
+            <Tab onClick={()=>{setDisplay([false,true,false,false])}} value="two" label="Device Logs" />
+            <Tab onClick={()=>{ setDisplay([false,false,true,false])}} value="three" label="App Profiling Logs" />
+            <Tab onClick={()=>{ setDisplay([false,false,false,true])}} value="four" label="CPU and Memory" />
+          </Tabs>
+        </Box>
         {display[0] ? (<textarea className='textarea' value={tLog}></textarea>) 
         : display[1] ? (<textarea className='textarea' value={dLog}></textarea>)
         : display[2] ? (<textarea className='textarea' value={aLog}></textarea>) 

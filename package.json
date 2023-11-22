@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/roboto": "^5.0.8",
+    "@mui/icons-material": "^5.14.18",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.6",
     "apexcharts": "^3.44.0",
     "axios": "^1.6.0",
     "react": "^18.2.0",
@@ -17,7 +20,8 @@
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.18.0",
-    "sass": "^1.69.5"
+    "sass": "^1.69.5",
+    "styled-components": "^6.1.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

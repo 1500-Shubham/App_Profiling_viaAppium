@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './styles/app.scss'
 import { useState, createContext } from 'react' 
+import CssBaseline from "@mui/material/CssBaseline";
+import Box from "@mui/material/Box";
 
 export const appiumServer="http://localhost:4723"
 
