@@ -7,33 +7,7 @@
     height: 3%;
     margin: 0.5vh;
 }
-.detailsArea{
-    background-color: e0ebeb;
-    border: 1px solid black;
-    height: 18%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 0.25cm;
-}
-.cap{
-    display: flex;
-    border: 1px solid black;
-    height: 24%;
-    flex-direction: row;
-    justify-content: space-around;
-    margin: 0.25cm;
-}
-.capabilities{
-overflow-y: scroll;
-border: 1px solid black;
-width: 50%;
-}
-.desiredCapabilities{
-width: 50%;
-overflow-y: scroll;
-border: 1px solid black;
-}
+
 #buttons{
     border: 1px solid black;
     background-color: lemonchiffon;
@@ -54,7 +28,8 @@ border: 1px solid black;
 }
 
 .textarea {
-    height: 56%;
+    height: 100%;
+    width: 100%;
     overflow-y: scroll;
     // height: 100px;
     resize: none;
@@ -62,7 +37,8 @@ border: 1px solid black;
 }
 #textarea2 {
     margin: 1cm;
-    height: 56%;
+    width: 100%;
+    height: 100%;
     overflow-y: scroll;
     background-color: white;
 }

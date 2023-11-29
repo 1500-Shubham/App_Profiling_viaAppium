@@ -1,31 +1,49 @@
-import { useState } from 'react'
-import {BrowserRouter, Route, Routes} from "react-router-dom"
-import Header from './components/Header'
-import { Home } from './pages/Home'
-import { SessionList } from './pages/SessionList'
-import './styles/app.scss'
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
+import { useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Header from "./components/Header";
+import { Home } from "./pages/Home";
+import { SessionList } from "./pages/SessionList";
+import "./styles/app.scss";
+import { Box, ThemeProvider } from "@mui/system";
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <div>
       <BrowserRouter>
-      <Header />
-    <div className='app'>
-      <div className="col1">
-      <SessionList/>
-      </div>
-      <div className="col2">
-          <Routes>
-            <Route path="/" element={<Home/>} />
-          </Routes>
-      </div>
+        <Header />
+        <Box
+          component="container"
+          height={900}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            p: 0,
+            m: 0,
+            width: "100%",
+          }}
+        >
+          <Box
+            component="container"
+            height={900}
+            sx={{ p: 0.5, border: "1px solid grey", width: "25%" }}
+          >
+            <SessionList />
+          </Box>
+
+          <Box
+            component="container"
+            height={900}
+            sx={{ p: 1, border: "1px solid grey", width: "75%" }}
+          >
+            <Routes>
+              <Route path="/" element={<Home />} />
+            </Routes>
+          </Box>
+        </Box>
+      </BrowserRouter>
     </div>
-     </BrowserRouter>
-  </div>
-  )
+  );
 }
 
-export default App
+export default App;

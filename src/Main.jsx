@@ -18,7 +18,7 @@ export const AppContext=createContext(
 );
 const AppWrapper= ()=>{
   const [sessionId,setSessionId] = useState("14456615-2109-4502-8fff-592d58f173c6");
-  const [sessionDetails,setSessionDetails]=useState({
+  const [sessionDetails,setSessionDetails] = useState({
   "capabilities": {
     "platformName": "android",
     "app": "/Users/shubham2.keshari/Documents/proverbial_android.apk",

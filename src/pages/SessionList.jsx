@@ -6,12 +6,11 @@ import BubbleChartIcon from '@mui/icons-material/BubbleChart';
 import axios from 'axios';
 import { appiumServer, AppContext } from '../Main';
 import { SessionListItems } from '../components/SessionListItems';
-import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 
 
 export const SessionList = () => {
-    const [textArray,setTextArray]= useState([])
+  const [textArray,setTextArray]= useState([])
     const { sessionId, setSessionId, sessionDetails, setSessionDetails }= useContext(AppContext);
     const[log,setLog]=useState("");
     const getAllSessions =async ()=>{
@@ -28,22 +27,45 @@ export const SessionList = () => {
       // console.log(sessionDetails)
     }
     return (
-    <div className='sessionList'>
-        {/* <button id='btn' onClick={getAllSessions}>Get All Sessions</button> */}
-        <Button id='btn' onClick={getAllSessions} variant="outlined" startIcon={<BubbleChartIcon />}>Get All Sessions</Button>
-        <div id='txtarea'>
-            {
-             textArray.map((item,index)=>{
-              return (
-                
-              
-                <div className='sessionListItems'>
-                  <button onClick={() =>updateHandler(item.session_id,item)}> <SessionListItems item={item}/></button> 
-                </div>
-              )
-             }) 
-            }
-        </div>
-    </div>
-  )
+      <Box
+        component="container"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          p: 0,
+          m: 0,
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        <Button
+          id="btn"
+          onClick={getAllSessions}
+          variant="outlined"
+          startIcon={<BubbleChartIcon />}
+        >
+          Get All Sessions
+        </Button>
+        <Box
+          component="container"
+          sx={{
+            p: 0,
+            m: 0,
+            width: "100%",
+            height: "96%",
+            overflowY:'scroll'
+          }}
+        >
+          {textArray.map((item, index) => {
+            return (
+              <div className="sessionListItems">
+                <button onClick={() => updateHandler(item.session_id, item)}>
+                  <SessionListItems item={item} />
+                </button>
+              </div>
+            );
+          })}
+        </Box>
+      </Box>
+    );
 }

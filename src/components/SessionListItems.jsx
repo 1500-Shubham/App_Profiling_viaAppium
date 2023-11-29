@@ -1,24 +1,33 @@
 import React from 'react'
 import '../styles/sessionList.scss'
 import Paper from '@mui/material/Paper';
-
+import Typography from "@mui/material/Typography";
 
 export const SessionListItems = (props) => {
-//    console.log(props.item.session_id)
-//    console.log(props.fun(5));
 
   return (
-    
-    <div className='itemsList'>
-    <Paper boxShadow='yellow' elevation={3}>
-    <span id='android'>{props.item.platform_name} {props.item.platform_version}   </span>
-    <span id='emulator'>{props.item.device_name}</span>
-   <br/> 
-   <br/> 
-     <p>{props.item.session_id}</p>
-     {/* <p> {JSON.stringify(props.item)}</p> */}
-     </Paper>
+    <div className="itemsList">
+      <Paper boxShadow="0 1px 6px 1px blue" elevation={5}>
+        <Typography
+          variant="body2"
+          component="h6"
+          fontWeight={"bold"}
+          display="inline"
+        >
+          {props.item.platform_name} {props.item.platform_version}
+        </Typography>
+        <Typography
+          variant="body2"
+          component="h6"
+          fontWeight={"bold"}
+          display="inline"
+        >
+          {"   "} {props.item.device_name}
+        </Typography>
+        <br />
+        <br />
+        <p>{props.item.session_id}</p>
+      </Paper>
     </div>
-    
-  )
+  );
 }

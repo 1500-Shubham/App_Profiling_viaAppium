@@ -1,39 +1,158 @@
-import React,{useContext} from 'react'
-import { AppContext } from '../Main';
-import "../styles/home.scss"
-
+import React, { useContext } from "react";
+import { AppContext } from "../Main";
+import "../styles/home.scss";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+const GridTheme = createTheme({
+  components: {
+    MuiTypography: {
+      variants: [
+        {
+          props: { variant: "body1" },
+          style: { fontSize: 15, fontWeight: "bold" },
+        },
+        {
+          props: { variant: "body3" },
+          style: { fontSize: 11, backgroundColor: "#FFFBF5" },
+        },
+      ],
+    },
+  },
+});
 export const DetailsArea = () => {
-    const { sessionId, setSessionId, sessionDetails, setSessionDetails }= useContext(AppContext);
-
+  const { sessionId, setSessionId, sessionDetails, setSessionDetails } =
+    useContext(AppContext);
   return (
-    <div className='detailsArea'>
-    <div id='box1'>
-    <p>Session ID  : {sessionDetails.session_id}</p>
-    <br/>
-    <p>Start Time  : {sessionDetails.start_time }</p>
-    <br/>
-    <p>Device Name : {sessionDetails.device_name }</p>
-    <br/>
-    <p>Total Cpu   : {sessionDetails.device_info.total_cpu }</p>
-    </div>
-    <div id='box2'>
-    <p>OS : {sessionDetails.platform_name}</p>
-    <br/>
-    <p>End Time  : {sessionDetails.end_time }</p>
-    <br/>
-    <p>UDID : {sessionDetails.udid }</p>
-    <br/>
-    <p>Total Memory   : {((sessionDetails.device_info.total_memory)/1024).toFixed(2) } MB</p>
-    </div>
-    <div id='box3'>
-    <p>OS Version: {sessionDetails.platform_version}</p>
-    <br/>
-    <p>Automation  : {sessionDetails.automation_name }</p>
-    <br/>
-    <p>App : {sessionDetails.app }</p>
-    <br/>
-    <p>API Level   : {sessionDetails.device_info.api_level }</p>
-    </div>
-    </div>
-  )
-}
+    <ThemeProvider theme={GridTheme}>
+      <Box
+        component="container"
+        sx={{
+          border: "1px solid black",
+          height: "20%",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-evenly",
+          marginBottom: 0,
+          p: 0,
+        }}
+      >
+        <Box
+          component="container"
+          sx={{
+            m: 0,
+            p: 0,
+          }}
+        >
+          <Typography variant="body1" component="h4" display={"inline"}>
+            Session ID :
+          </Typography>{" "}
+          <Typography variant="body1" component="h4" display={"inline"}>
+            {sessionDetails.session_id}
+          </Typography>
+          <br />
+          <br />
+          <Typography variant="body1" component="h4" display={"inline"}>
+            Start Time :
+          </Typography>
+          <Typography variant="body1" component="h4" display={"inline"}>
+            {sessionDetails.start_time}
+          </Typography>
+          <br />
+          <br />
+          <Typography variant="body1" component="h4" display={"inline"}>
+            Device Name :
+          </Typography>
+          <Typography variant="body1" component="h4" display={"inline"}>
+            {sessionDetails.device_name}
+          </Typography>
+          <br />
+          <br />
+          <Typography variant="body1" component="h4" display={"inline"}>
+            Total Cpu :
+          </Typography>
+          <Typography variant="body1" component="h4" display={"inline"}>
+            {sessionDetails.device_info.total_cpu}
+          </Typography>
+        </Box>
+        <Box
+          component="container"
+          sx={{
+            m: 0,
+            p: 0,
+          }}
+        >
+          <Typography variant="body1" component="h4" display={"inline"}>
+            OS :
+          </Typography>
+          <Typography variant="body1" component="h4" display={"inline"}>
+            {sessionDetails.platform_name}
+          </Typography>
+          <br />
+          <br />
+          <Typography variant="body1" component="h4" display={"inline"}>
+            End Time :
+          </Typography>
+          <Typography variant="body1" component="h4" display={"inline"}>
+            {sessionDetails.end_time}
+          </Typography>
+          <br />
+          <br />
+          <Typography variant="body1" component="h4" display={"inline"}>
+            UDID :
+          </Typography>
+          <Typography variant="body1" component="h4" display={"inline"}>
+            {sessionDetails.udid}
+          </Typography>
+          <br />
+          <br />
+          <Typography variant="body1" component="h4" display={"inline"}>
+            Total Memory :{" "}
+          </Typography>
+          <Typography variant="body1" component="h4" display={"inline"}>
+            {(sessionDetails.device_info.total_memory / 1024).toFixed(2)} MB
+          </Typography>
+        </Box>
+        <Box
+          component="container"
+          sx={{
+            m: 0,
+            p: 0,
+          }}
+        >
+          <Typography variant="body1" component="h4" display={"inline"}>
+            OS Version:
+          </Typography>
+          <Typography variant="body1" component="h4" display={"inline"}>
+            {sessionDetails.platform_version}
+          </Typography>
+          <br />
+          <br />
+          <Typography variant="body1" component="h4" display={"inline"}>
+            Automation :
+          </Typography>
+          <Typography variant="body1" component="h4" display={"inline"}>
+            {sessionDetails.automation_name}
+          </Typography>
+          <br />
+          <br />
+          <Typography variant="body1" component="h4" display={"inline"}>
+            App :
+          </Typography>
+          <Typography variant="body1" component="h4" display={"inline"}>
+            {sessionDetails.app}
+          </Typography>
+          <br />
+          <br />
+          <Typography variant="body1" component="h4" display={"inline"}>
+            API Level :{" "}
+          </Typography>
+          <Typography variant="body1" component="h4" display={"inline"}>
+            {sessionDetails.device_info.api_level}
+          </Typography>
+        </Box>
+      </Box>
+    </ThemeProvider>
+  );
+};
