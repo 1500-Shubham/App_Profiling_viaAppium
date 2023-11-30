@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import TextField from "@mui/material/TextField";
+import { NetworkLogs } from "../components/NetworkLogs";
 
 export const Home = () => {
   const { sessionId, setSessionId, sessionDetails, setSessionDetails } =
@@ -21,7 +22,7 @@ export const Home = () => {
   const [tLog, setTLog] = useState({});
   const [dLog, setDLog] = useState({});
   const [aLog, setALog] = useState({});
-  const [display, setDisplay] = useState([true, false, false, false]);
+  const [display, setDisplay] = useState([true, false, false, false, false]);
   const [cpuChart, setCpuChart] = useState({
     series: [
       {
@@ -288,31 +289,38 @@ export const Home = () => {
           >
             <Tab
               onClick={() => {
-                setDisplay([true, false, false, false]);
+                setDisplay([true, false, false, false, false]);
               }}
               value="one"
               label="Text Logs"
             />
             <Tab
               onClick={() => {
-                setDisplay([false, true, false, false]);
+                setDisplay([false, true, false, false, false]);
               }}
               value="two"
               label="Device Logs"
             />
             <Tab
               onClick={() => {
-                setDisplay([false, false, true, false]);
+                setDisplay([false, false, true, false, false]);
               }}
               value="three"
               label="App Profiling Logs"
             />
-            <Tab
+            {/* <Tab
               onClick={() => {
-                setDisplay([false, false, false, true]);
+                setDisplay([false, false, false, true,false]);
               }}
               value="four"
               label="CPU and Memory"
+            /> */}
+            <Tab
+              onClick={() => {
+                setDisplay([false, false, false, false, true]);
+              }}
+              value="five"
+              label="Network Logs"
             />
           </Tabs>
         </Box>
@@ -350,7 +358,7 @@ export const Home = () => {
             //   }}
             // ></TextField>
             <textarea className="textarea" value={aLog}></textarea>
-          ) : (
+          ) : display[3] ? (
             <Box
               sx={{
                 border: "1px solid black",
@@ -374,6 +382,18 @@ export const Home = () => {
                 height={350}
                 width={"75%"}
               />
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                border: "1px solid black",
+                height: "100%",
+                width: "100%",
+                overflowY: "scroll",
+                m: 0,
+              }}
+            > 
+              <NetworkLogs nLog={tLog}/>
             </Box>
           )}
         </Box>
