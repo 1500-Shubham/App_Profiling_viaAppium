@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { AppContext } from "../Main";
 import {
   AppBar,
@@ -10,11 +9,9 @@ import {
   Stack,
   Button,
 } from "@mui/material";
-import PriorityHighSharpIcon from "@mui/icons-material/PriorityHighSharp";
 import HomeIcon from "@mui/icons-material/Home";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LoginIcon from "@mui/icons-material/Login";
-import "../styles/header.scss";
 import JIO from "../icons/jioBlue.png";
 
 const Header = () => {
@@ -26,7 +23,7 @@ const Header = () => {
           <img src={JIO} width={"75vh"} height={"50vh"} />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          {sessionId}
+          SESSION ID: {sessionId}
         </Typography>
         <Stack direction="row" spacing={2}>
           <Button

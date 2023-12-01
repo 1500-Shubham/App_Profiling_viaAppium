@@ -4,10 +4,8 @@ import Header from "./components/Header";
 import { Home } from "./pages/Home";
 import { SessionList } from "./pages/SessionList";
 import "./styles/app.scss";
-import { Box, ThemeProvider } from "@mui/system";
+import { Box } from "@mui/system";
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <div>
       <BrowserRouter>

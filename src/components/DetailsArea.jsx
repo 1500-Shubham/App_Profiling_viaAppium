@@ -21,8 +21,7 @@ const GridTheme = createTheme({
   },
 });
 export const DetailsArea = () => {
-  const { sessionId, setSessionId, sessionDetails, setSessionDetails } =
-    useContext(AppContext);
+  const { sessionDetails } = useContext(AppContext);
   return (
     <ThemeProvider theme={GridTheme}>
       <Box

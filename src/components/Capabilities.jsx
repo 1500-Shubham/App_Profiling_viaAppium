@@ -4,7 +4,7 @@ import "../styles/home.scss";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 export const Capabilities = () => {
-  const { sessionId, setSessionId, sessionDetails, setSessionDetails } =
+  const { sessionDetails } =
     useContext(AppContext);
   const capabiltiesJson = sessionDetails.capabilities;
   const capabiltiesJsonKeys = Object.keys(capabiltiesJson);

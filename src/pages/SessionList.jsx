@@ -11,20 +11,16 @@ import Box from "@mui/material/Box";
 
 export const SessionList = () => {
   const [textArray,setTextArray]= useState([])
-    const { sessionId, setSessionId, sessionDetails, setSessionDetails }= useContext(AppContext);
+    const {  setSessionId,  setSessionDetails }= useContext(AppContext);
     const[log,setLog]=useState("");
     const getAllSessions =async ()=>{
     const {data}= await axios.get(`${appiumServer}/dashboard/api/sessions`)
     const count= data.result.count;
     setTextArray(data.result.rows)
-    // var myJsonString = JSON.stringify(textArray);
-    // setLog(JSON.stringify(JSON.parse(myJsonString),null,2))
-    // console.log(JSON.stringify(JSON.parse(myJsonString),null,2))
     }
     function updateHandler (i,d){
       setSessionId(i);
       setSessionDetails(d);
-      // console.log(sessionDetails)
     }
     return (
       <Box

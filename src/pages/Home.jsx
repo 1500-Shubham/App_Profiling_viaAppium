@@ -1,7 +1,6 @@
 import React from "react";
 import "../styles/home.scss";
 import { useState, useContext, useEffect } from "react";
-import toast from "react-hot-toast";
 import axios from "axios";
 import { AppContext, appiumServer } from "../Main";
 import ReactApexCharts from "react-apexcharts";
@@ -12,12 +11,10 @@ import { Capabilities } from "../components/Capabilities";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import TextField from "@mui/material/TextField";
 import { NetworkLogs } from "../components/NetworkLogs";
 
 export const Home = () => {
-  const { sessionId, setSessionId, sessionDetails, setSessionDetails } =
-    useContext(AppContext);
+  const { sessionId, sessionDetails } = useContext(AppContext);
   const [log, setLog] = useState({});
   const [tLog, setTLog] = useState({});
   const [dLog, setDLog] = useState({});
@@ -27,6 +24,7 @@ export const Home = () => {
     series: [
       {
         name: "CPU Used (%)",
+        // data:[],
         data: [],
       },
       {
@@ -38,19 +36,7 @@ export const Home = () => {
       chart: {
         height: 350,
         type: "area",
-        // dropShadow: {
-        //   enabled: true,
-        //   color: '#000',
-        //   top: 18,
-        //   left: 7,
-        //   blur: 10,
-        //   opacity: 0.2
-        // },
-        // toolbar: {
-        //   show: false
-        // }
       },
-      // colors: ['#77B6EA', '#545454'],
       dataLabels: {
         enabled: false,
       },
@@ -61,16 +47,6 @@ export const Home = () => {
         text: "CPU Profiling",
         align: "left",
       },
-      // grid: {
-      //   borderColor: '#e7e7e7',
-      //   row: {
-      //     colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-      //     opacity: 0.5
-      //   },
-      // },
-      // markers: {
-      //   size: 1
-      // },
       xaxis: {
         categories: [],
         title: {
@@ -108,22 +84,7 @@ export const Home = () => {
       chart: {
         height: 350,
         type: "area",
-        // dropShadow: {
-        //   enabled: true,
-        //   color: '#000',
-        //   top: 18,
-        //   left: 7,
-        //   blur: 10,
-        //   opacity: 0.2
-        // },
-        // toolbar: {
-        //   show: false
-        // }
       },
-      // colors: ['#77B6EA', '#545454'],
-      // dataLabels: {
-      //   enabled: false,
-      // },
       stroke: {
         curve: "smooth",
       },
@@ -131,16 +92,6 @@ export const Home = () => {
         text: "Memory Profiling",
         align: "left",
       },
-      // grid: {
-      //   borderColor: '#e7e7e7',
-      //   row: {
-      //     colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-      //     opacity: 0.5
-      //   },
-      // },
-      // markers: {
-      //   size: 1
-      // },
       xaxis: {
         categories: [],
         title: {
@@ -175,7 +126,6 @@ export const Home = () => {
         var textArray = data.result.rows;
         var myJsonString = JSON.stringify(textArray);
         setTLog(JSON.stringify(JSON.parse(myJsonString), null, 2));
-        // console.log(JSON.stringify(JSON.parse(myJsonString),null,2))
       })
       .catch((error) => {
         console.log(error);
@@ -189,7 +139,6 @@ export const Home = () => {
         var textArray = data.result.rows;
         var myJsonString = JSON.stringify(textArray);
         setDLog(JSON.stringify(JSON.parse(myJsonString), null, 2));
-        // console.log(JSON.stringify(JSON.parse(myJsonString),null,2))
       })
       .catch((error) => {
         console.log(error);
@@ -202,7 +151,7 @@ export const Home = () => {
         var textArray = data.result;
         var myJsonString = JSON.stringify(textArray);
         setALog(JSON.stringify(JSON.parse(myJsonString), null, 2));
-        // console.log(JSON.stringify(JSON.parse(myJsonString),null,2))
+
         // ********Creating Charts************
         const n = textArray.length;
         const timestamp = [],
@@ -249,13 +198,8 @@ export const Home = () => {
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
-    // console.log(e.target.value + " " + newValue)
-    if (newValue === "one") {
-    } else if (newValue === "two") {
-    } else if (newValue === "three") {
-    } else {
-    }
   };
+  
   return (
     <Box
       component="container"
@@ -308,13 +252,13 @@ export const Home = () => {
               value="three"
               label="App Profiling Logs"
             />
-            {/* <Tab
+            <Tab
               onClick={() => {
-                setDisplay([false, false, false, true,false]);
+                setDisplay([false, false, false, true, false]);
               }}
               value="four"
               label="CPU and Memory"
-            /> */}
+            />
             <Tab
               onClick={() => {
                 setDisplay([false, false, false, false, true]);
@@ -326,37 +270,10 @@ export const Home = () => {
         </Box>
         <Box sx={{ border: "1px solid black", height: "85%", width: "100%" }}>
           {display[0] ? (
-            // <TextField
-            //   value={tLog}
-            //   size="small"
-            //   height="500vh"
-            //   width= "500vh"
-            //   sx={{
-
-            //   }}
-            // ></TextField>
             <textarea className="textarea" value={tLog}></textarea>
           ) : display[1] ? (
-            // <TextField
-            //   value={dLog}
-            //   sx={{
-            //     height: "100%",
-            //     width: "100%",
-            //     overflowY: "scroll",
-            //     resize: "none",
-            //   }}
-            // ></TextField>
             <textarea className="textarea" value={dLog}></textarea>
           ) : display[2] ? (
-            // <TextField
-            //   value={aLog}
-            //   sx={{
-            //     height: "200px",
-            //     width: "100%",
-            //     overflowY: "scroll",
-            //     resize: "none",
-            //   }}
-            // ></TextField>
             <textarea className="textarea" value={aLog}></textarea>
           ) : display[3] ? (
             <Box
@@ -392,8 +309,8 @@ export const Home = () => {
                 overflowY: "scroll",
                 m: 0,
               }}
-            > 
-              <NetworkLogs nLog={tLog}/>
+            >
+              <NetworkLogs nLog={tLog} />
             </Box>
           )}
         </Box>
